@@ -25,16 +25,16 @@ A web-based platform designed to connect job seekers with employers and streamli
 
 
 ### Home Page
-![Home Page](C:\Users\IS\Desktop\photo\home.jpg)
+![Home Page](home.jpg)
 
 ### Login Page
-![Login Page](C:\Users\IS\Desktop\photo\login.jpg)
+![Login Page](login.jpg)
 
 ###Jobseeker Dashboard
-![Dashboard](C:\Users\IS\Desktop\photo\jobseekerdashboard.jpg)
+![Dashboard](jobseekerdashboard.jpg)
 
 ### Applay
-![Dapplay](C:\Users\IS\Desktop\photo\applay.jpg)
+![Dapplay](applay.jpg)
 
 ## 🚀 How to Run locally
 
