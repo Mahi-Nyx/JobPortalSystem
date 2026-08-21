@@ -40,4 +40,4 @@ A web-based platform designed to connect job seekers with employers and streamli
 
 1. Clone this repository:
    ```bash
-   git clone [https://github.com/Mahi-Nyx/JobPortalSystem.git](https://github.com/Mahi-Nyx/JobPortalSystem.git)
+ [  git clone[ [https://github.com/Mahi-Nyx/JobPortalSystem.git](https://github.com/Mahi-Nyx/JobPortalSystem.git)](https://github.com/Mahi-Nyx/JobPortalSystem)](https://github.com/Mahi-Nyx/JobPortalSystem)
