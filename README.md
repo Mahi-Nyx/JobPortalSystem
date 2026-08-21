@@ -30,7 +30,7 @@ System Preview 📸 Screenshots
 ### Login Page
 ![Login Page](login1.jpg)
 
-###Jobseeker Dashboard
+### Jobseeker Dashboard
 ![Dashboard](jobseekerdashboard.jpg)
 
 ### Applay
