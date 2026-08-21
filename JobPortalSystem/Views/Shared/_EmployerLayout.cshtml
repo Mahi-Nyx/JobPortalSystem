@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Employer</title>
+    @Styles.Render("~/Content/css")
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding-top: 85px; /* Ensures space below the fixed navbar */
+        }
+
+        /* Fixed Header Navbar Wrapper */
+        .employer-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+            background: linear-gradient(135deg, #0f766e, #115e59);
+            box-shadow: 0 4px 12px rgba(17, 94, 89, 0.15);
+            padding: 12px 24px;
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Brand Elements */
+        .brand-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar-brand-custom {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white !important;
+            letter-spacing: -0.5px;
+            text-decoration: none !important;
+            line-height: 1.2;
+        }
+
+        .brand-sub {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 2px;
+        }
+
+        /* Navigation Links Menu */
+        .nav-links-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link-custom {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-decoration: none !important;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+            .nav-link-custom:hover {
+                color: white !important;
+                background-color: rgba(255, 255, 255, 0.12);
+            }
+
+            .nav-link-custom.active {
+                color: white !important;
+                background-color: rgba(255, 255, 255, 0.2);
+                box-shadow: inset 0 1px 3px rgba(0,0,0,0.15);
+            }
+
+        /* Right User / Logout Section */
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .welcome-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-logout-custom {
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+            background: transparent;
+        }
+
+            .btn-logout-custom:hover {
+                background: white !important;
+                color: #115e59 !important;
+                border-color: white;
+            }
+
+        /* Responsive Mobile Toggler (Hidden by default on Desktop) */
+        .mobile-toggle-btn {
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 6px 10px;
+            background: transparent;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .toggler-icon-line {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            background-size: 100% 100%;
+        }
+
+        /* Page Layout Box Content container spacing */
+        .employer-content-wrapper {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Breakpoint Rules for Responsive Layout View */
+        @@media (max-width: 991.98px) {
+            .mobile-toggle-btn {
+                display: block;
+            }
+
+            .navbar-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-collapsible-menu {
+                display: none;
+                width: 100%;
+                margin-top: 15px;
+            }
+
+                .nav-collapsible-menu.show {
+                    display: block;
+                }
+
+            .nav-links-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                width: 100%;
+            }
+
+            .nav-link-custom {
+                width: 100%;
+                padding: 10px;
+            }
+
+            .user-section {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                gap: 10px;
+            }
+
+            .btn-logout-custom {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation Element -->
+    <header class="employer-navbar">
+        <div class="navbar-container">
+            <!-- Brand Space -->
+            <div class="brand-section">
+                <a class="navbar-brand-custom" href="@Url.Action("EmployDashboard", "Employer")">
+                    🚀 CareerPulse
+                </a>
+                <span class="brand-sub">Employer Panel</span>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <button class="mobile-toggle-btn" type="button" id="customNavbarToggler">
+                <span class="toggler-icon-line"></span>
+            </button>
+
+            <!-- Collapsible Items Section Wrapper -->
+            <div class="nav-collapsible-menu" id="navbarMenuContent">
+                <ul class="nav-links-group">
+                    <li>
+                        <a class="nav-link nav-link-custom @(ViewBag.Title == "Employer Dashboard" ? "active" : "")" href="@Url.Action("EmployDashboard", "Employer")">
+                            💼 Dashboard
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a class="nav-link nav-link-custom @(ViewBag.Title == "Post Job" ? "active" : "")" href="@Url.Action("PostJob", "Employer")">
+                            ➕ Post Job
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link nav-link-custom @(ViewBag.Title == "My Jobs" ? "active" : "")" href="@Url.Action("MyJobs", "Employer")">
+                            📋 My Jobs
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link nav-link-custom @(ViewBag.Title == "Applicants" ? "active" : "")" href="@Url.Action("Applicants", "Employer")">
+                            👥 Applicants
+                        </a>
+                    </li>
+                    
+                   
+
+                    <!-- Appended Right User Elements into standard list flow for responsive control -->
+                    <li class="user-section ml-lg-4">
+                        @if (Session["FullName"] != null)
+                        {
+            <span class="welcome-text">Welcome, @Session["FullName"]</span>}
+                        <a href="@Url.Action("Logout", "Account")" class="btn-logout-custom">
+                            🚪 Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Display Arena -->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Developed by Mahi</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <!-- Minimal JavaScript Trigger to handle manual responsive expansion without library dependencies -->
+    <script type="text/javascript">document.addEventListener("DOMContentLoaded", function () {
+            var toggler = document.getElementById("customNavbarToggler");
+            var menu = document.getElementById("navbarMenuContent");
+
+            if (toggler && menu) {
+                toggler.addEventListener("click", function () {
+                    if (menu.style.display === "block" || menu.classList.contains("show")) {
+                        menu.style.display = "";
+                        menu.classList.remove("show");
+                    } else {
+                        menu.style.display = "block";
+                        menu.classList.add("show");
+                    }
+                });
+            }
+        });</script>
+</body>
+</html>

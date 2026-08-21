@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Employer Dashboard";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<style>
+    .top-card {
+        background: linear-gradient(135deg, #0f766e, #115e59);
+        color: white;
+        padding: 28px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .action-card {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+        .action-card h4 {
+            color: #115e59;
+            font-weight: bold;
+        }
+</style>
+
+<div class="top-card">
+    <h2>Employer Dashboard</h2>
+    <p class="mb-0">Welcome, @Session["FullName"]</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="action-card">
+            <h4>Company Profile</h4>
+            <p>Manage your company information.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="action-card">
+            <h4>Post Job</h4>
+            <p>Create a new job vacancy.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="action-card">
+            <h4>Applicants</h4>
+            <p>View job seeker applications.</p>
+        </div>
+    </div>
+</div>

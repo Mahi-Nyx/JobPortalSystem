@@ -1,0 +1,86 @@
+﻿@{ ViewBag.Title = "Admin Dashboard";
+                Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+
+<style>
+    .top-card-gradient {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+        margin-bottom: 35px;
+    }
+
+    .stat-card-premium {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        border: 1px solid #e2e8f0;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .stat-card-premium:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+        }
+
+    .icon-badge {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        background: #eff6ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .stat-card-premium h6 {
+        color: #64748b;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+    }
+
+    .stat-card-premium h2 {
+        color: #0f172a;
+        font-weight: 700;
+        font-size: 2.25rem;
+        margin-bottom: 0;
+    }
+</style>
+
+<div class="top-card-gradient">
+    <h2 class="fw-bold mb-1">Welcome back, @(Session["FullName"] ?? "Administrator")!</h2>
+    <p class="mb-0 text-white-50">Here is what is happening across your platform ecosystem metrics today.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-4 col-md-6">
+        <div class="stat-card-premium">
+            <div class="icon-badge">👥</div>
+            <h6>Total Platform Accounts</h6>
+            <h2>@ViewBag.TotalUsers</h2>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6">
+        <div class="stat-card-premium">
+            <div class="icon-badge" style="background: #ecfdf5;">🎓</div>
+            <h6 style="color: #059669;">Verified Job Seekers</h6>
+            <h2>@ViewBag.JobSeekers</h2>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-12">
+        <div class="stat-card-premium">
+            <div class="icon-badge" style="background: #fdf2f8;">🏢</div>
+            <h6 style="color: #db2777;">Registered Corporate Employers</h6>
+            <h2>@ViewBag.Employers</h2>
+        </div>
+    </div>
+</div>

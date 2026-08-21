@@ -1,0 +1,120 @@
+﻿@model List<JobPortalSystem.Models.User>
+@{ ViewBag.Title = "Manage Users";
+                Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+
+<style>
+    .table-container-card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        padding: 30px;
+    }
+
+    .table-header-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .custom-table th {
+        background-color: #f8fafc;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 16px;
+        border-bottom: 2px solid #e2e8f0;
+    }
+
+    .custom-table td {
+        padding: 16px;
+        vertical-align: middle;
+        color: #334155;
+        border-bottom: 1px solid #f1f5f9;
+    }
+    /* Modern Dynamic State Badges */
+    .status-pill {
+        padding: 6px 12px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .status-pill-active {
+        background-color: #d1fae5;
+        color: #065f46;
+    }
+
+    .status-pill-pending {
+        background-color: #fef3c7;
+        color: #92400e;
+    }
+    /* Action Control Utilities buttons modification */
+    .btn-action-custom {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        transition: all 0.2s ease;
+    }
+</style>
+
+<div class="table-container-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="table-header-title">👥 System User Directory Management</div>
+        <span class="badge bg-secondary rounded-pill px-3 py-2">Total Loaded: @Model.Count</span>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table custom-table mb-0">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Email Address</th>
+                    <th>Security Role</th>
+                    <th>Status Flag</th>
+                    <th>Created On</th>
+                    <th class="text-end">Administrative Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+    <tr>
+        <td class="fw-bold text-dark">@user.FullName</td>
+        <td>@user.Email</td>
+        <td>
+            <span class="badge bg-light text-secondary border px-2.5 py-1.5 font-monospace">@user.Role</span>
+        </td>
+        <td>
+            @if (user.Status == "Active")
+            {
+<span class="status-pill status-pill-active">🟢 Active</span> }
+                else
+                {
+<span class="status-pill status-pill-pending">🟡 Pending Verification</span>}
+        </td>
+        <td class="text-muted small">@user.CreatedDate.ToString("MMM dd, yyyy")</td>
+        <td class="text-end">
+            <div class="d-inline-flex gap-2">
+                @if (user.Status == "Pending")
+                {
+<a href="@Url.Action("ApproveUser", "Admin", new { id = user.UserID })"
+   class="btn btn-success btn-action-custom">
+    ✓ Approve
+</a>}
+                <a href="@Url.Action("DeleteUser", "Admin", new { id = user.UserID })"
+                   class="btn btn-outline-danger btn-action-custom"
+                   onclick="return confirm('Are you sure you want to permanently delete user account associated with @user.FullName?');">
+                    🗑️ Remove
+                </a>
+            </div>
+        </td>
+    </tr>}
+            </tbody>
+        </table>
+    </div>
+</div>

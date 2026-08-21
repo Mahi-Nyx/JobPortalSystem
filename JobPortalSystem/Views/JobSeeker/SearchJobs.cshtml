@@ -1,0 +1,19 @@
+﻿@foreach (var job in Model)
+{
+    <tr>
+        <td>@job.JobTitle</td>
+        <td>@job.CompanyName</td>
+        <td>@job.Location</td>
+        <td>@job.Deadline</td>
+        <td>
+            @if (job.Deadline.HasValue && job.Deadline.Value.Date < DateTime.Today)
+            {
+                <span class="label label-danger">Closed</span>
+            }
+            else
+            {
+                <span class="label label-success">Open</span>
+            }
+        </td>
+    </tr>
+}

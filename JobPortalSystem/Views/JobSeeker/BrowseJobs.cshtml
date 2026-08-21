@@ -1,0 +1,160 @@
+﻿@model IEnumerable<JobPortalSystem.Models.Job>
+@{ ViewBag.Title = "Browse Jobs";
+                Layout = "~/Views/Shared/_JobSeekerLayout.cshtml"; }
+
+<style>
+    .page-title {
+        color: #0f172a;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .job-card {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .job-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-color: #cbd5e1;
+        }
+
+    .job-title {
+        color: #1e40af;
+        font-weight: 600;
+        font-size: 1.25rem;
+    }
+
+    .meta-text {
+        color: #64748b;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .job-description {
+        color: #475569;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .badge-salary {
+        background-color: #f0fdf4;
+        color: #16a34a;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 6px 16px;
+        border-radius: 6px;
+    }
+
+    .badge-deadline {
+        background-color: #fff1f2;
+        color: #e11d48;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 6px 16px;
+        border-radius: 6px;
+    }
+
+    .btn-apply-now {
+        font-weight: 600;
+        padding: 8px 24px;
+        border-radius: 8px;
+        background-color: #2563eb;
+        border: none;
+        transition: background-color 0.2s ease;
+    }
+
+        .btn-apply-now:hover {
+            background-color: #1d4ed8;
+        }
+
+    .btn-disabled-deadline {
+        font-weight: 600;
+        padding: 8px 24px;
+        border-radius: 8px;
+        background-color: #94a3b8;
+        border: none;
+        color: #ffffff;
+        cursor: not-allowed;
+    }
+</style>
+
+<div class="row mb-4">
+    <div class="col-12">
+        @if (TempData["ErrorMessage"] != null)
+        {
+<div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+    <strong>Notice:</strong> @TempData["ErrorMessage"]
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>}
+
+        <h2 class="page-title mb-1">🔍 Explore Career Opportunities</h2>
+        <p class="text-muted">Discover open listings posted by top-tier employers matching your professional skills.</p>
+        <hr class="text-muted opacity-25" />
+    </div>
+</div>
+
+<div class="row g-4">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var job in Model)
+        {
+            bool isExpired = job.Deadline.HasValue && job.Deadline.Value.Date < DateTime.Today;
+
+<div class="col-12">
+    <div class="job-card shadow-sm">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+            <div>
+                <h4 class="job-title mb-1">@job.JobTitle</h4>
+                <div class="d-flex flex-wrap align-items-center gap-2 mt-1">
+                    <span class="meta-text">🏢 <strong>@job.CompanyName</strong></span>
+                    <span class="text-muted d-none d-md-inline">•</span>
+                    <span class="meta-text">📍 @job.Location</span>
+                </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2">
+                <span class="badge-salary">💰 @job.Salary</span>
+                <span class="badge-deadline">
+                    ⏳ Deadline: @(job.Deadline.HasValue ? job.Deadline.Value.ToString("yyyy-MM-dd") : "No Deadline")
+                </span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <p class="job-description mb-0">
+                @job.Description
+            </p>
+        </div>
+
+        <div class="d-flex justify-content-end align-items-center border-top pt-3">
+            @if (isExpired)
+            {
+<button class="btn btn-disabled-deadline px-4 py-2" disabled>
+    ⛔ Deadline Passed
+</button> }
+                    else
+                    {
+<a href="/JobSeeker/Apply?jobId=@job.JobID" class="btn btn-primary btn-apply-now px-4 py-2">
+    Apply for Job &rarr;
+</a>}
+        </div>
+    </div>
+</div> }
+            }
+            else
+            {
+<div class="col-12 text-center py-5">
+    <div class="card p-5 border border-dashed shadow-sm bg-white">
+        <h3 class="text-muted mb-2">No active job listings found</h3>
+        <p class="text-secondary mb-0">Check back later! Employers haven't posted any job opportunities yet.</p>
+    </div>
+</div>}
+</div>

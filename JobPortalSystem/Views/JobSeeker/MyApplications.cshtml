@@ -1,0 +1,176 @@
+﻿@model IEnumerable<JobPortalSystem.Models.Application>
+@{ ViewBag.Title = "My Applications";
+                Layout = "~/Views/Shared/_JobSeekerLayout.cshtml"; }
+
+<style>
+    .page-title {
+        color: #0f172a;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+
+    .table-container {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    .custom-table {
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+
+        .custom-table thead {
+            background-color: #f8fafc;
+        }
+
+        .custom-table th {
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            padding: 16px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .custom-table td {
+            padding: 16px;
+            color: #334155;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+    /* Status Badge Styling rules */
+    .status-badge {
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 6px 12px;
+        border-radius: 50px;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .status-pending {
+        background-color: #fef9c3;
+        color: #854d0e;
+    }
+
+    .status-approved {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .status-rejected {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .btn-view-cv {
+        font-size: 0.85rem;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+</style>
+
+<div class="container-fluid my-5 px-4">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="page-title mb-1">📋 Submissions Dashboard</h2>
+            <p class="text-muted">Track your ongoing application progresses, verify interview review updates, and check approval states seamlessly.</p>
+            <hr class="text-muted opacity-25" />
+        </div>
+    </div>
+
+    <!-- Submissions Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="table-container">
+                @if (Model != null && Model.Any())
+                {
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Applied Date</th>
+                    <th>Your Details</th>
+                    <th>Status Verification</th>
+                    <th>Portfolio Attachment</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var app in Model)
+                {
+<tr>
+    <!-- Job Title -->
+    <td>
+        <strong class="text-primary">@(app.Job != null ? app.Job.JobTitle : "Job Profile #" + app.JobID)</strong>
+    </td>
+
+    <!-- Company Name -->
+    <td>
+        <span class="text-secondary"><i class="bi bi-building"></i> @(app.Job != null ? app.Job.CompanyName : "N/A")</span>
+    </td>
+
+    <!-- Applied Date -->
+    <td class="text-muted">
+        @app.AppliedDate.ToString("yyyy-MM-dd HH:mm")
+    </td>
+
+    <!-- Applicant Quick Info Summary -->
+    <td>
+        <div class="small">
+            <strong>@app.FullName</strong><br />
+            <span class="text-muted">@app.Email</span>
+        </div>
+    </td>
+
+    <!-- Status Checking Badges Logic -->
+    <td>
+        @if (app.Status == "Approved")
+        {
+<span class="status-badge status-approved">✔ Approved</span> }
+                    else if (app.Status == "Rejected")
+                    {
+<span class="status-badge status-rejected">❌ Rejected</span> }
+                    else
+                    {
+<span class="status-badge status-pending">⏳ Pending Review</span>}
+    </td>
+
+    <!-- Link to view physical uploaded document file -->
+    <td>
+        @if (!string.IsNullOrEmpty(app.CVPath))
+        {
+<a href="@Url.Content(app.CVPath)" target="_blank" class="btn btn-outline-secondary btn-view-cv">
+    📄 View Document
+</a> }
+                    else
+                    {
+<span class="text-muted small">No file provided</span>}
+    </td>
+</tr>}
+            </tbody>
+        </table>
+    </div> }
+                else
+                {
+    <div class="text-center py-5">
+        <h4 class="text-muted mb-2">No applications found</h4>
+        <p class="text-secondary mb-4">You have not submitted an application to any hiring listings yet.</p>
+        <a href="/JobSeeker/BrowseJobs" class="btn btn-primary px-4">
+            Explore Active Openings &rarr;
+        </a>
+    </div>}
+            </div>
+        </div>
+    </div>
+</div>

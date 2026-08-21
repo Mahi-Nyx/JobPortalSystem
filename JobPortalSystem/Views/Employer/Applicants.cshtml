@@ -1,0 +1,109 @@
+﻿@model IEnumerable<JobPortalSystem.Models.Application>
+@{ ViewBag.Title = "Applicants";
+                Layout = "~/Views/Shared/_EmployerLayout.cshtml"; }
+
+<div class="row mb-4">
+    <div class="col">
+        <h2 class="fw-bold m-0" style="color: #0f766e;">Candidate Applications</h2>
+        <p class="text-muted m-0">Review inbound candidate credentials and track process decisions.</p>
+    </div>
+</div>
+
+<div class="card border-0" style="border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); overflow: hidden; background: white;">
+    <div class="table-responsive">
+        <table class="table align-middle mb-0" style="width: 100%;">
+            <thead class="table-light" style="background-color: #f8fafc;">
+                <tr>
+                    <th class="p-4 text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Candidate / Position</th>
+                    <th class="p-4 text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Contact Details</th>
+                    <th class="p-4 text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Education</th>
+                    <th class="p-4 text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Document</th>
+                    <th class="p-4 text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Status</th>
+                    <th class="p-4 text-end text-secondary small fw-bold text-uppercase" style="font-size: 11px;">Workflow Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+    <tr>
+        <td colspan="6" class="text-center py-5 text-muted">
+            <div style="font-size: 3rem; margin-bottom: 10px;">📁</div>
+            <h5 class="fw-bold">No applications yet</h5>
+            <p class="small mb-0">When candidates apply to your jobs, they will appear here instantly.</p>
+        </td>
+    </tr> }
+                else
+                {
+                    foreach (var app in Model)
+                    {
+    <tr>
+        <td class="p-4">
+            <div class="fw-bold text-dark" style="font-size: 16px;">@app.FullName</div>
+            <span class="badge bg-light text-dark border mt-1 px-2.5 py-1.5" style="font-weight: 500;">
+                🎯 @(app.Job != null ? app.Job.JobTitle : "Unknown Position")
+            </span>
+        </td>
+
+        <td class="p-4">
+            <div class="small" style="color: #334155;"><i class="fa-regular fa-envelope me-1 text-muted"></i> @app.Email</div>
+            <div class="small text-muted mt-1"><i class="fa-solid fa-phone me-1 text-muted"></i> @app.Phone</div>
+        </td>
+
+        <td class="p-4 text-muted small">
+            @app.Education
+        </td>
+
+        <td class="p-4">
+            <a href="@Url.Content(app.CVPath)" download class="fw-bold text-decoration-none small" style="color: #0f766e;">
+                📥 Download CV
+            </a>
+        </td>
+
+        <td class="p-4">
+            <span id="badge-@app.ApplicationID" class="badge rounded-pill px-3 py-2"
+                  style="@(app.Status == "Accepted" ? "background-color: #d1fae5; color: #065f46;" : app.Status == "Rejected" ? "background-color: #fee2e2; color: #991b1b;" : "background-color: #fef3c7; color: #92400e;")">
+                ● @app.Status
+            </span>
+        </td>
+
+        <td class="p-4 text-end">
+            <div class="d-inline-flex gap-2" id="actions-@app.ApplicationID" style="@(app.Status != "Pending" ? "display: none !important;" : "")">
+                <button onclick="updateStatus(@app.ApplicationID, 'Accepted')" class="btn btn-sm text-white px-3" style="background-color: #0f766e; border-radius: 6px; font-weight: 600;">Accept</button>
+                <button onclick="updateStatus(@app.ApplicationID, 'Rejected')" class="btn btn-sm btn-outline-danger px-3" style="border-radius: 6px; font-weight: 600;">Reject</button>
+            </div>
+            <span id="text-@app.ApplicationID" class="text-muted small" style="@(app.Status == "Pending" ? "display: none;" : "")">
+                Decision Logged
+            </span>
+        </td>
+    </tr>}
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function updateStatus(appId, statusChoice) {
+        if (confirm("Mark this application as " + statusChoice + "?")) {
+            $.post('@Url.Action("UpdateApplicationStatus", "Employer")', { id: appId, targetStatus: statusChoice }, function (response) {
+                if (response.success) {
+                    // 1. Instantly update the status pill color and text
+                    var pill = $("#badge-" + appId);
+                    pill.text("● " + statusChoice);
+                    if (statusChoice === "Accepted") {
+                        pill.css({ "background-color": "#d1fae5", "color": "#065f46" });
+                    } else {
+                        pill.css({ "background-color": "#fee2e2", "color": "#991b1b" });
+                    }
+
+                    // 2. Hide buttons and show final decision text smoothly
+                    $("#actions-" + appId).hide();
+                    $("#text-ant-" + appId).show();
+                    window.location.reload(); // Quick clean refresh to sync page metrics
+                } else {
+                    alert("Something went wrong updating status.");
+                }
+            });
+        }
+    }
+</script>

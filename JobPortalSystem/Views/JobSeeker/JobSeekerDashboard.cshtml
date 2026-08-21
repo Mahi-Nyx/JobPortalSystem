@@ -1,0 +1,95 @@
+﻿@{ ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml"; }
+
+
+<style>
+    .welcome-hero {
+        background: linear-gradient(135deg, #1e293b, #0f172a);
+        color: white;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+        margin-bottom: 35px;
+    }
+
+    .dashboard-card {
+        background: #ffffff;
+        border: 1px solid #f1f5f9;
+        border-radius: 16px;
+        padding: 30px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-decoration: none !important;
+        color: inherit;
+        display: block;
+        height: 100%;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+        }
+
+    .card-icon-box {
+        width: 60px;
+        height: 60px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    .bg-icon-blue {
+        background-color: #eff6ff;
+        color: #2563eb;
+    }
+
+    .bg-icon-green {
+        background-color: #f0fdf4;
+        color: #16a34a;
+    }
+
+    .action-btn-custom {
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 8px 20px;
+        border-radius: 8px;
+        margin-top: 15px;
+        display: inline-block;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="welcome-hero d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div>
+        <h1 class="fw-bold mb-2">Welcome Back, @Session["FullName"]! 👋</h1>
+        <p class="text-white-50 mb-0 fs-5">Track your ongoing application progresses and locate your ideal corporate matches.</p>
+    </div>
+    <div>
+        <span class="badge bg-primary px-3 py-2 rounded-pill fw-semibold">Profile Active</span>
+    </div>
+</div>
+
+<!-- Grid Overview Actions -->
+<div class="row g-4">
+    <!-- Option 1: Browse Jobs -->
+    <div class="col-md-6">
+        <a href="@Url.Action("BrowseJobs", "JobSeeker")" class="dashboard-card shadow-sm">
+            <div class="card-icon-box bg-icon-blue">🔍</div>
+            <h3 class="fw-bold text-dark mb-2">Browse Openings</h3>
+            <p class="text-muted mb-3">Explore newly added jobs, examine salary packages, and instantly submit your credentials to verified employers.</p>
+            <span class="btn btn-primary action-btn-custom">Explore Listings &rarr;</span>
+        </a>
+    </div>
+
+    <!-- Option 2: Applications Tracker -->
+    <div class="col-md-6">
+        <a href="@Url.Action("MyApplications", "JobSeeker")" class="dashboard-card shadow-sm">
+            <div class="card-icon-box bg-icon-green">📄</div>
+            <h3 class="fw-bold text-dark mb-2">My Applications</h3>
+            <p class="text-muted mb-3">Review historical interview schedules, inspect outstanding selection responses, and check approval states seamlessly.</p>
+            <span class="btn btn-success action-btn-custom">View Submissions &rarr;</span>
+        </a>
+    </div>
+</div>

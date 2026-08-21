@@ -1,0 +1,70 @@
+﻿@model List<JobPortalSystem.Models.Job>
+
+@{
+    ViewBag.Title = "My Jobs";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">My Posted Jobs</h3>
+    </div>
+
+    <div class="panel-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Salary</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var job in Model)
+                {
+                <tr>
+                    <td>@job.JobTitle</td>
+                    <td>@job.CompanyName</td>
+                    <td>@job.Location</td>
+                    <td>@job.Salary</td>
+                    <td>
+                        @(job.Deadline.HasValue
+                                ? job.Deadline.Value.ToString("yyyy-MM-dd")
+                                : "No deadline")
+                    </td>
+                    <td>
+                        @if (job.Deadline.HasValue && job.Deadline.Value.Date < DateTime.Today)
+                        {
+                            <span class="label label-danger">Closed</span>
+                        }
+                        else
+                        {
+                            <span class="label label-success">Open</span>
+                        }
+                    </td>
+                    <td>@job.CreatedDate</td>
+                    <td>
+                        <a href="@Url.Action("EditJob","Employer",
+                             new { id = job.JobID })"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="@Url.Action("DeleteJob", "Employer", new { id = job.JobID })"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this job?');">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

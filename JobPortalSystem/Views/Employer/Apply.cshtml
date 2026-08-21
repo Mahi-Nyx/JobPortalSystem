@@ -1,0 +1,133 @@
+﻿@model JobPortalSystem.Models.JobApplication
+@{
+    ViewBag.Title = "Submit Application";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml";
+}
+
+<style>
+    .form-container {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+        padding: 40px;
+    }
+
+    .form-header-gradient {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        margin: -40px -40px 30px -40px;
+        padding: 30px 40px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .form-label-custom {
+        font-weight: 600;
+        color: #334155;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+
+    .input-custom {
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        padding: 10px 14px;
+        font-size: 0.95rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .input-custom:focus {
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        outline: none;
+    }
+
+    .btn-submit-application {
+        background: #2563eb;
+        color: white;
+        font-weight: 600;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        transition: background 0.2s;
+    }
+
+    .btn-submit-application:hover {
+        background: #1d4ed8;
+    }
+
+    .btn-cancel-custom {
+        background: #f8fafc;
+        color: #64748b;
+        font-weight: 500;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        text-align: center;
+        text-decoration: none;
+        transition: background 0.2s;
+    }
+
+    .btn-cancel-custom:hover {
+        background: #f1f5f9;
+        color: #475569;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-md-9">
+        <div class="form-container">
+            
+            <div class="form-header-gradient">
+                <h3 class="fw-bold mb-1">🚀 Fast Apply</h3>
+                <p class="mb-0 text-white-50 small">Fill out your details to submit your profile directly to the hiring desk.</p>
+            </div>
+
+            @using (Html.BeginForm("Apply", "JobSeeker", FormMethod.Post, new { enctype = "multipart/form-data", @class = "needs-validation" }))
+            {
+                @Html.AntiForgeryToken()
+                
+                @Html.HiddenFor(m => m.JobID)
+
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label class="form-label form-label-custom">Full Name</label>
+                        @Html.TextBoxFor(m => m.FullName, new { @class = "form-control input-custom w-100", placeholder = "Enter your full name", required = "required" })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label form-label-custom">Email Address</label>
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-custom w-100", type = "email", placeholder = "name@example.com", required = "required" })
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label form-label-custom">Phone Number</label>
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control input-custom w-100", type = "tel", placeholder = "+254 700 000000", required = "required" })
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label form-label-custom">Highest Education Level</label>
+                        @Html.TextBoxFor(m => m.Education, new { @class = "form-control input-custom w-100", placeholder = "e.g., B.Sc. in Computer Science, Strathmore University", required = "required" })
+                    </div>
+
+                    <div class="col-12 mb-4">
+                        <label class="form-label form-label-custom">Attach Document Portfolio (CV / Resume)</label>
+                        <input type="file" name="CVFile" class="form-control input-custom w-100" accept=".pdf,.doc,.docx" required />
+                        <div class="form-text text-muted small mt-1">Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</div>
+                    </div>
+
+                    <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
+                        <button type="submit" class="btn btn-submit-application flex-grow-1">
+                            🎯 Submit Application
+                        </button>
+                        <a href="@Url.Action("BrowseJobs", "JobSeeker")" class="btn btn-cancel-custom px-4">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            }
+            
+        </div>
+    </div>
+</div>

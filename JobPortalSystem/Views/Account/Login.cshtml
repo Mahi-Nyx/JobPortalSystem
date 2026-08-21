@@ -1,0 +1,179 @@
+﻿@{ 
+    ViewBag.Title = "Login"; 
+}
+
+<style>
+    /* Full height centering container */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 75vh;
+        width: 100%;
+        padding: 20px 0;
+    }
+
+    /* Modern Card Layout */
+    .auth-card {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 14px;
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 440px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Fixed Contrast Header */
+    .auth-header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 2rem 1.5rem;
+        text-align: center;
+    }
+
+    .auth-header h3 {
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .auth-header p {
+        color: rgba(255, 255, 255, 0.85) !important;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .form-label-custom {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control-custom {
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        padding: 0.65rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
+        outline: none;
+    }
+
+    /* Button Styling */
+    .btn-login {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        color: white;
+        transition: opacity 0.2s ease;
+    }
+
+    .btn-login:hover {
+        opacity: 0.95;
+        color: white;
+    }
+
+    .btn-cancel {
+        background-color: #e2e8f0;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #334155;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-cancel:hover {
+        background-color: #cbd5e1;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    .btn-reset {
+        background-color: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        font-weight: 600;
+        color: #2a5298;
+        text-align: center;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-reset:hover {
+        background-color: #e2e8f0;
+        color: #1e3c72;
+        text-decoration: none;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="card auth-card border-0">
+        <div class="auth-header">
+            <h3>Welcome Back</h3>
+            <p>Log into your Job Portal account</p>
+        </div>
+
+        <div class="card-body p-4 p-sm-5">
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { autocomplete = "off" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success small py-2 border-0 shadow-sm mb-4" role="alert" style="border-left: 4px solid #28a745 !important; background-color: #f4fbf7;">
+                        <i class="fas fa-check-circle text-success me-2"></i> @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger small py-2 border-0 shadow-sm mb-4" role="alert" style="border-left: 4px solid #dc3545 !important; background-color: #fdf5f6;">
+                        <i class="fas fa-exclamation-circle text-danger me-2"></i> @ViewBag.ErrorMessage
+                    </div>
+                }
+
+                <div class="form-group mb-3">
+                    <label class="form-label-custom d-block">Email Address</label>
+                    <input type="email" name="Email" value="" class="form-control form-control-custom w-100" placeholder="name@example.com" autocomplete="off" required />
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label-custom d-block">Password</label>
+                    <input type="password" name="Password" value="" class="form-control form-control-custom w-100" placeholder="Enter your password" autocomplete="new-password" required />
+                </div>
+
+                <!-- Compact Side-by-Side Login & Cancel Buttons -->
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <button type="submit" class="btn btn-login" style="width: 100px; padding: 6px 12px;">
+                        Login
+                    </button>
+                    <a href="@Url.Action("Index", "Home")" class="btn btn-cancel" style="width: 100px; padding: 6px 12px;">
+                        Cancel
+                    </a>
+                </div>
+
+                <!-- Single Compact Reset Password Button at the Bottom -->
+                <div>
+                    <a href="@Url.Action("ForgotPassword", "Account")" class="btn btn-reset" style="display: inline-block; padding: 6px 14px;">
+                        Reset Password
+                    </a>
+                </div>
+            }
+        </div>
+
+        <div class="card-footer text-center py-3 bg-light border-0">
+            <span class="text-muted small">Don't have an account yet?</span>
+            <a href="@Url.Action("Register", "Account")" class="font-weight-bold text-decoration-none small ms-1" style="color: #2a5298;">Register here</a>
+        </div>
+    </div>
+</div>

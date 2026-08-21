@@ -1,0 +1,69 @@
+﻿@model JobPortalSystem.Models.Job
+
+@{
+    ViewBag.Title = "Edit Job";
+    Layout = "~/Views/Shared/_EmployerLayout.cshtml";
+}
+
+<h2>Edit Job</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.JobID)
+
+    <div class="form-group">
+        <label>Job Title</label>
+        @Html.TextBoxFor(m => m.JobTitle, new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Company Name</label>
+        @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Description</label>
+        @Html.TextAreaFor(m => m.Description,
+            new { @class = "form-control", rows = 4 })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Location</label>
+        @Html.TextBoxFor(m => m.Location, new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Salary</label>
+        @Html.TextBoxFor(m => m.Salary, new { @class = "form-control" })
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <label>Deadline</label>
+        @Html.TextBoxFor(m => m.Deadline,
+            "{0:yyyy-MM-dd}",
+            new { @class = "form-control", type = "date" })
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-success">
+        Update Job
+    </button>
+
+    <a href="@Url.Action("MyJobs","Employer")"
+       class="btn btn-default">
+        Cancel
+    </a>
+}

@@ -1,0 +1,214 @@
+﻿@model JobPortalSystem.Models.Application
+@using System.Linq.Expressions
+@{ ViewBag.Title = "Submit Application";
+    Layout = "~/Views/Shared/_JobSeekerLayout.cshtml"; }
+
+<style>
+    .full-width-wrapper {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .form-container {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+        padding: 45px;
+        width: 100%;
+    }
+
+    .form-header-gradient {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        color: white;
+        margin: -45px -45px 35px -45px;
+        padding: 35px 45px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+    }
+
+    .form-label-custom {
+        font-weight: 600;
+        color: #1e293b;
+        font-size: 0.95rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .input-custom {
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        padding: 12px 16px;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+        .input-custom:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+            outline: none;
+        }
+
+    .education-radio-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 5px;
+    }
+
+    .education-card {
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        background-color: #f8fafc;
+    }
+
+        .education-card:hover {
+            border-color: #cbd5e1;
+            background-color: #f1f5f9;
+        }
+
+        .education-card input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .education-card span {
+            font-weight: 500;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .education-card input[type="radio"]:checked + span {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .education-card input[type="radio"]:checked {
+            outline: 2px solid #2563eb;
+        }
+
+    .btn-submit-application {
+        background: #2563eb;
+        color: white;
+        font-weight: 600;
+        padding: 14px;
+        border-radius: 8px;
+        border: none;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+
+        .btn-submit-application:hover {
+            background: #1d4ed8;
+        }
+
+    .btn-cancel-custom {
+        background: #ffffff;
+        color: #64748b;
+        font-weight: 500;
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        text-align: center;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.2s;
+    }
+
+        .btn-cancel-custom:hover {
+            background: #f8fafc;
+            color: #334155;
+            border-color: #94a3b8;
+        }
+</style>
+
+<div class="full-width-wrapper my-5">
+    <div class="form-container">
+
+        <div class="form-header-gradient">
+            <h2 class="fw-bold mb-2">🚀 Fast Apply</h2>
+            <p class="mb-0 text-white-50" style="font-size: 1.05rem;">Fill out your details to submit your profile directly to the hiring desk.</p>
+        </div>
+
+        <form action="/JobSeeker/Apply" method="post" enctype="multipart/form-data">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" name="JobID" value="@Model.JobID" />
+
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <label class="form-label form-label-custom">Full Name</label>
+                    <input type="text" name="FullName" class="form-control input-custom w-100" placeholder="Enter your full name" required="required" value="@(Model != null ? Model.FullName : "")" />
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label form-label-custom">Email Address</label>
+                    <input type="email" name="Email" class="form-control input-custom w-100" placeholder="name@example.com" required="required" value="@(Model != null ? Model.Email : "")" />
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <label class="form-label form-label-custom">Phone Number</label>
+                    <input type="tel" name="Phone" class="form-control input-custom w-100" placeholder="Phone metric" required="required" value="@(Model != null ? Model.Phone : "")" />
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label class="form-label form-label-custom">Highest Education Level</label>
+                    <div class="education-radio-grid">
+
+                        <label class="education-card">
+                            <input type="radio" name="Education" value="Undergraduate" required="required" @(Model != null && Model.Education == "Undergraduate" ? "checked" : "") />
+                            <span>Undergraduate</span>
+                        </label>
+
+                        <label class="education-card">
+                            <input type="radio" name="Education" value="Diploma" @(Model != null && Model.Education == "Diploma" ? "checked" : "") />
+                            <span>Diploma</span>
+                        </label>
+
+                        <label class="education-card">
+                            <input type="radio" name="Education" value="Degree" @(Model != null && Model.Education == "Degree" ? "checked" : "") />
+                            <span>Degree</span>
+                        </label>
+
+                        <label class="education-card">
+                            <input type="radio" name="Education" value="Master" @(Model != null && Model.Education == "Master" ? "checked" : "") />
+                            <span>Master</span>
+                        </label>
+
+                        <label class="education-card">
+                            <input type="radio" name="Education" value="PhD" @(Model != null && Model.Education == "PhD" ? "checked" : "") />
+                            <span>PhD</span>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="col-12 mb-5">
+                    <label class="form-label form-label-custom">Attach Document Portfolio (CV / Resume)</label>
+                    <input type="file" name="CVFile" class="form-control input-custom w-100" accept=".pdf,.doc,.docx" required="required" />
+                    <div class="form-text text-muted small mt-2" style="font-size: 0.85rem;">Accepted formats: PDF, DOC, DOCX (Max size: 5MB)</div>
+                </div>
+
+                <div class="col-12 d-flex flex-column flex-sm-row gap-3">
+                    <button type="submit" class="btn btn-submit-application flex-grow-1">
+                        🎯 Submit Application
+                    </button>
+                    <a href="/JobSeeker/BrowseJobs" class="btn btn-cancel-custom px-5">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "Register";
+}
+
+<style>
+    /* Full height centering container */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 75vh;
+        width: 100%;
+        padding: 20px 0;
+    }
+
+    /* Modern Card Layout */
+    .auth-card {
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        border-radius: 14px;
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 480px;
+        overflow: hidden;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Fixed Contrast Header */
+    .auth-header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 2rem 1.5rem;
+        text-align: center;
+    }
+
+    .auth-header h3 {
+        color: #ffffff !important;
+        font-weight: 700;
+        font-size: 1.6rem;
+        margin: 0 0 6px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .auth-header p {
+        color: rgba(255, 255, 255, 0.85) !important;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    .form-label-custom {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #475569;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control-custom {
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        padding: 0.65rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .form-control-custom:focus {
+        border-color: #2a5298;
+        box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.15);
+        outline: none;
+    }
+
+    .btn-auth {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        color: white;
+        transition: opacity 0.2s ease;
+    }
+
+    .btn-auth:hover {
+        opacity: 0.95;
+        color: white;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="card auth-card border-0">
+        <div class="auth-header">
+            <h3>Create Account</h3>
+            <p>Join our professional job portal network today</p>
+        </div>
+        
+        <div class="card-body p-4 p-sm-5">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger small mb-3" })
+
+                <div class="form-group mb-3">
+                    <label class="form-label-custom d-block">Full Name</label>
+                    <input type="text" name="FullName" class="form-control form-control-custom w-100" placeholder="e.g. John Doe" required autocomplete="off" />
+                    @Html.ValidationMessage("FullName", "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label-custom d-block">Email Address</label>
+                    <input type="email" name="Email" class="form-control form-control-custom w-100" placeholder="name@example.com" required autocomplete="off"/>
+                    @Html.ValidationMessage("Email", "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="form-group mb-3">
+                    <label class="form-label-custom d-block">Password</label>
+                    <input type="password" name="Password" class="form-control form-control-custom w-100" placeholder="••••••••" required autocomplete="new-password"/>
+                    @Html.ValidationMessage("Password", "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label-custom d-block">Account Role</label>
+                    <select name="Role" class="form-control form-control-custom w-100" style="height: auto;" required>
+                        <option value="" disabled selected>-- Select Your Role --</option>
+                        <option value="JobSeeker">Job Seeker (Looking for work)</option>
+                        <option value="Employer">Employer (Looking to hire)</option>
+                    </select>
+                    @Html.ValidationMessage("Role", "", new { @class = "text-danger small" })
+                </div>
+
+                <button type="submit" class="btn btn-auth w-100 shadow-sm mt-2">
+                    Register Account
+                </button>
+            }
+        </div>
+        
+        <div class="card-footer text-center py-3 bg-light border-0">
+            <span class="text-muted small">Already have an account?</span> 
+            <a href="@Url.Action("Login", "Account")" class="font-weight-bold text-decoration-none small ms-1" style="color: #2a5298;">Login here</a>
+        </div>
+    </div>
+</div>
