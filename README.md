@@ -23,7 +23,6 @@ A web-based platform designed to connect job seekers with employers and streamli
 
 ## Here is Some 📸 Screenshots
 
-*(Replace `path/to/image.png` with your image paths after uploading screenshots to repository)*
 
 ### Home Page
 ![Home Page](C:\Users\IS\Desktop\photo\home.jpg)
