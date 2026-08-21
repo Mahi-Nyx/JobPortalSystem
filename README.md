@@ -28,7 +28,7 @@ System Preview 📸 Screenshots
 ![Home Page](home.jpg)
 
 ### Login Page
-![Login Page](login.jpg)
+![Login Page](login1.jpg)
 
 ###Jobseeker Dashboard
 ![Dashboard](jobseekerdashboard.jpg)
