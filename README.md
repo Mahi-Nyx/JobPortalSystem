@@ -7,6 +7,7 @@ A web-based platform designed to connect job seekers with employers and streamli
 The **Job Portal System** bridges the gap between job seekers and employers. It allows employers to post job vacancies, manage applications, and helps job seekers discover opportunities and submit their resumes online — all in one place.
 
 ---
+## 🚀 Key Features
 
 ### For Job Seekers
 - ✅ Create and manage your professional profile
